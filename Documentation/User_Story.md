@@ -1,5 +1,6 @@
-Role User Pencari Lowongan Part-time :
+# USER STORY
 
+## Role User Pencari Lowongan Part-time :
 1. Sebagai User saya ingin melakukan registrasi akun agar saya dapat membuat akun pada aplikasi partimer. 
 2. Sebagai user saya ingin login akun agar saya bisa menggunakan aplikasi partimer. 
 3. Sebagai user saya ingin bisa mengedit profil saya agar saya dapat merubah dan menambahkan identitas ke dalam profil saya
@@ -11,7 +12,7 @@ Role User Pencari Lowongan Part-time :
 9. Sebagai user saya ingin mendaftar lowongan kerja paruh waktu agar saya bisa mendapatkan kerja paruh waktu. 
 10. Sebagai user saya ingin bisa menghubungi admin ketika saya memiliki kendala dalam mendaftar pekerjaan sehingga saya bisa mendapatkan bantuan terhadap kendala tersebut.
 
-Role Perusahaan / Mitra : 
+## Role Perusahaan / Mitra : 
 1. Sebagai mitra saya ingin melakukan registrasi akun agar saya dapat membuat akun.
 2. Sebagai mitra saya ingin login akun agar saya bisa menggunakan aplikasi partimer. 
 3. Sebagai mitra saya ingin bisa mengedit profil saya agar saya dapat merubah dan menambahkan identitas ke dalam profil saya
@@ -20,7 +21,7 @@ Role Perusahaan / Mitra :
 6. Sebagai mitra saya ingin menerima pendaftar agar bisa mendapatkan pekerja paruh waktu sesuai dengan kriteria yang saya butuhkan.
 7. Sebagai mitra saya ingin menolak pendaftar yang tidak sesuai kriteria penawaran saya agar mitra memiliki kualitas pekerja paruh waktu yang sesuai dengan kebutuhan. 
 
-Role Admin : 
+## Role Admin : 
 1. Sebagai admin saya ingin bisa melakukan approval pada akun mitra asli agar aplikasi bisa berjalan dengan baik dengan adanya pihak mitra
 2. Sebagai admin saya ingin bisa melakukan penolakan pada akun mitra palsu agar bisa terhindar dari penipuan,
 3. Sebagai admin saya ingin bisa melakukan approval pekerjaan yang ditawarkan mitra agar penawaran pekerjaan dapat dilihat oleh pencari pekerjaan…
