@@ -1,29 +1,36 @@
-# Sprint n
+# Sprint 1
 
 
-|Date|4 September 2023|
+|Date|19 September 2023|
 | :- | :- |
-|Created by|Rahmatullah Arrizal|
-|Participant|Rahmatullah Arrizal, Fulan1, Fulan2, Fulanah|
+|Created by|Wafa Tsabita|
+|Participant|Wafa Tsabita, M. Keenan F., Rifqi Akmal F.|
 ## Sprint Planning
 ### Goals:
-- Sprint goal 1
-- Sprint goal 2
-- …
+- Membuat user story
+- Menentukan API
+- Menentukan Techstack
+- Membuat github repository
+- Membuat mockup Login dan Registrasi
+- Membuat mockup Landing Page
+- Membuat mockup page list pekerjaan
+
 ### Breakdown Task:
 #### Commitment: x SP
-- Fulan1: x SP
-  - [ ] TASK-1 x SP
-  - [ ] TASK-2 x SP
-- Fulan2: x SP
-  - [ ] TASK-3 x SP
-  - [ ] TASK-4 x SP
-- Fulanah: x SP
-  - [ ] TASK-5 x SP
+- Keenan : x SP
+  - [ ] Menentukan API x SP
+  - [ ] Menentukan Techstack x SP
+- Rifqi : x SP
+  - [ ] Membuat Mockup Login dan Registrasi x SP
+  - [ ] Membuat Mockup Landing Page x SP
+  - [ ] Membuat Mockup Page List Pekerjaan x SP
+- Wafa : x SP
+  - [ ] Membuat User Story x SP
+  - [ ] Membuat Github Repository x SP
 
 #### Delivered:	 x SP
 ### During Sprint
-2023-09-04:
+2023-09-19:
 
 1. Feedback
 1. Blocker
