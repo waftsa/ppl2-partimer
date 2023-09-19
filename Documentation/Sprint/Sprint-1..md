@@ -1,7 +1,7 @@
 # Sprint 1
 
 
-|Date|19 September 2023|
+|Date|17 September 2023|
 | :- | :- |
 |Created by|Wafa Tsabita|
 |Participant|Wafa Tsabita, M. Keenan F., Rifqi Akmal F.|
