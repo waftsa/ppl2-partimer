@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phoneNum')->nullable();
             $table->string('icon_url')->nullable();
             $table->text('description')->nullable();
+            $table->boolean('verified');
             $table->rememberToken();
             $table->timestamps();
         });

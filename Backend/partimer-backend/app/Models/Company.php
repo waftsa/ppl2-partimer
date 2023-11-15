@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Company extends Authenticatable
 {
     use HasFactory;
 
@@ -21,7 +22,8 @@ class Company extends Model
         'address',
         'phoneNum',
         'description',
-        'icon_url'
+        'icon_url',
+        'verified',
     ];
 
     protected $hidden = [
@@ -30,7 +32,6 @@ class Company extends Model
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

@@ -2,21 +2,20 @@
 
 @section('content')
     <div class="container">
-    @if (!Auth::check())
-    <h1>Login</h1>
-    <form action="{{route('login.post')}}" method="POST">  
+    <h1>Company Login</h1>
+    <form action="{{route('company_login.post')}}" method="POST">   
         @csrf
-    
-        @if ($errors->any())
-        <div class="alert alert-danger">
+
+@if ($errors->any())
+    <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-        </div>
-        @endif
-
+    </div>
+@endif
+    
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
@@ -27,15 +26,9 @@
         <input type="password" class="form-control" name="password">
     </div>
     <div class="mb-3 form-check">
-    <a class="nav-link" href="{{ route('register') }}">Create account</a>
-    </div>
-    <div class="mb-3">
-    <a class="nav-link" href="{{ route('company_login') }}">Company</a>
+    <a class="nav-link" href="{{ route('company_register') }}">Create account</a>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
     </div>
-    @else
-    
-    @endif
 @endsection

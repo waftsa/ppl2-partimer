@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
 
-
-
 class UserController extends Controller
 {
     public function login(){
@@ -92,7 +90,6 @@ class UserController extends Controller
     }
 
     function logout(){
-        auth()->guard('web')->logout();
         Session::flush();
         Auth::logout();
         return redirect(route('login'));

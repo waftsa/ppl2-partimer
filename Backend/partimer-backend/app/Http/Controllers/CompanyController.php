@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,22 +10,20 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-
-
 class CompanyController extends Controller
 {
     public function login(){
 
-        if(auth()->guard('company')->check()){
-            return redirect()->intended(route('companyHompage'));
+        if(Auth::guard('company')->check()){
+            return redirect()->intended(route('company_homepage'));
         }
 
-        return view('Auth.CompanyAuth.loginComp', [
+        return view('Company.login', [
             'title' => 'Login'
         ]);
     }
 
-    public function loginPost(Request $req)
+    public function login_post(Request $req)
     {
         $req->validate([
             'email' => 'required',
@@ -33,7 +32,7 @@ class CompanyController extends Controller
 
         $credentials = $req->only('email', 'password');
         if(Auth::guard('company')->attempt($credentials)){ 
-            return redirect()->intended(route('companyHomepage'))->with('success','You are Logged in sucessfully.');
+            return redirect()->intended(route('company_homepage'))->with('success','You are Logged in sucessfully.');
         }
         return back()->with('error','Whoops! invalid email and password.');
     }
@@ -41,15 +40,15 @@ class CompanyController extends Controller
     public function register(){
 
         if(Auth::check()){
-            return redirect()->intended(route('companyHompage'));
+            return redirect()->intended(route('company_homepage'));
         }
 
-        return view('Auth.CompanyAuth.registerComp', [
+        return view('Company.register', [
             'title' => 'Register'
         ]);
     }
 
-    function registerPost(Request $req)
+    function register_post(Request $req)
     {
         $req->validate([
             'companyName' => 'required',
@@ -70,20 +69,28 @@ class CompanyController extends Controller
         $data['address'] = $req->address;
         $data['email'] = $req->email;
         $data['password'] = Hash::make($req->password);
+        $data['verified'] = 1;
         $user = Company::create($data);
 
         if(!$user)
         {
-            return redirect(route('user.register_comp'))->with("error", "Registration Failed, try again");
+            return redirect(route('company_register'))->with("error", "Registration Failed, try again");
         }
 
-        return redirect(route('user.login_comp'))->with("success", "Registration Successfull, Waiting For Approval");
+        return redirect(route('company_login'))->with("success", "Registration Successfull, Waiting For Approval");
     }
 
-    function logout(){
-        auth()->guard('company')->logout();
-        Session::flush();
-        Session::put('success', 'You are logout sucessfully');
-        return redirect(route('user.login_comp'));
+    public function index()
+    {
+        if(!Auth::guard('company')){
+            return redirect(route('login'));
+        }
+
+        $jobs = Job::all();
+        return view('Job.index_company', [
+            'title' => 'job',
+            'jobs' => $jobs,
+            compact('jobs')
+        ]);
     }
 }
