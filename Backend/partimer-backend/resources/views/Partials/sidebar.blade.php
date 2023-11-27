@@ -58,7 +58,7 @@ div.content {
 <div class="sidebar">
   <a class="active" href="/">Home</a>
   @auth
-  <a href="/job">Job</a>
+  <a href="{{ route('job.index') }}">Job</a>
   <a href="{{ route('profile',auth()->id()) }}">Profile</a>
   <a href="/contact_us">Contact Us</a>
   <a href="/about_us">About Us</a>

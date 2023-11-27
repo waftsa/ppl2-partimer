@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobController;
-use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +41,9 @@ Route::group(['prefix' => 'user' , 'namespace'=>'User'], function (){
         Route::get('/profile/{user}/edit',[UserController::class, 'edit'])->name('profile.edit');
         Route::put('/profile/{user}/update',[UserController::class, 'update'])->name('profile.update');
         Route::delete('/profile/{user}/delete',[UserController::class, 'delete'])->name('profile.delete');
+
+        Route::get('/job', [JobController::class, 'user_index'])->name('job.index');
+
     });
 });
 
@@ -57,20 +60,31 @@ Route::group(['prefix' => 'company' , 'namespace' => 'Company'], function(){
     Route::post('/register', [CompanyController::class, 'register_post'])->name('company_register.post');
 
     Route::group(['middleware' => ['auth:company']], function() {
-        Route::get('/index', function () {
-            return view('Company.homepage', [
-                'title' => "index"
-            ]);
-        })->name('company_homepage');
+        Route::get('/index', [CompanyController::class , 'homepage'])->name('company_homepage');
         
         Route::get('/index_job', [CompanyController::class, 'index'])->name('job.index.company');
 
+        Route::get('/job', [JobController::class, 'company_index'])->name('company_job.index');
+        Route::get('/job/{company}/create', [JobController::class, 'create'])->name('job.create');
+        Route::post('/job/{company}', [JobController::class, 'store'])->name('job.store');
+        Route::get('/job/{job}/edit',[JobController::class, 'edit'])->name('job.edit');
+        Route::put('/job/{job}/update',[JobController::class, 'update'])->name('job.update');
+        Route::delete('/job/{job}/delete',[JobController::class, 'delete'])->name('job.delete');
     });
 });
 
-Route::get('/job', [JobController::class, 'index'])->name('job.index');
-Route::get('/job/create', [JobController::class, 'create'])->name('job.create');
-Route::post('/job', [JobController::class, 'store'])->name('job.store');
-Route::get('/job/{job}/edit',[JobController::class, 'edit'])->name('job.edit');
-Route::put('/job/{job}/update',[JobController::class, 'update'])->name('job.update');
-Route::delete('/job/{job}/delete',[JobController::class, 'delete'])->name('job.delete');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
+    Route::get('/', [AdminController::class, 'login'])->name('admin_login');
+    Route::post('/', [AdminController::class, 'login_post'])->name('admin_login.post');
+
+    Route::group(['middleware' => ['auth:admins']], function(){
+        Route::get('/home', function(){
+            return view('Admin.home', [
+                'title' => 'home'
+            ]);
+        })->name('admin.home');
+
+        
+    });
+});
+

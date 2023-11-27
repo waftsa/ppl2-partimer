@@ -19,7 +19,7 @@
   <div class="card-body">
     <h5 class="card-title">Lowongan Pekerjaan</h5>
     <p class="card-text">Create Job </p>
-    <a href="/job/create" class="btn btn-primary">Select</a>
+    <a href="{{ route('job.create',['company' => Auth::guard('company')->user()->id]) }}" class="btn btn-primary">Select</a>
   </div>
     </div>
     <div class="card mb-3" style="width: 80rem;">

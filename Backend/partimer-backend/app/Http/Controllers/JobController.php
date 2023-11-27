@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
 class JobController extends Controller
 {
-    public function index()
+    public function user_index()
     {
         if(!auth()->guard('web')->check()){
             return redirect(route('login'));
@@ -23,17 +24,33 @@ class JobController extends Controller
         ]);     
     }
 
-    public function create()
+    public function company_index()
+    {
+        if(!auth()->guard('company')->check()){
+            return redirect(route('company_login'));
+        }
+
+        $jobs = Job::with('company')->get();
+
+        return view('Job.index_company', [
+            'title' => 'job',
+            'jobs' => $jobs,
+            compact('jobs')
+        ]);     
+    }
+
+    public function create(Company $company)
     {
         if(!auth()->guard('company')->check()){
             return redirect(route('user_homepage'));
         }
         return view('Job.create', [
-            'title' => 'create'
+            'title' => 'create',
+            'company' => $company
         ]);
     }
 
-    public function store(Request $req)
+    public function store(Company $company,Request $req)
     {
         $req->validate([
             'jobName' => 'required',
@@ -43,13 +60,14 @@ class JobController extends Controller
             'jobReq' => 'required'
         ]);
 
-
+        $data['company_id'] = $company->id;
         $data['jobName'] = $req->jobName;
         $data['Category'] = $req->kategori;
         $data['Salary'] = $req->salary;
         $data['jobDesc'] = $req->jobDesc;
         $data['requirement'] = $req->jobReq;
         $data['avail'] = 1;
+        $data['approved'] = 0;
         $newJob = Job::create($data);
 
         return redirect(route('company_homepage'));

@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Session;
 
 class CompanyController extends Controller
 {
+    public function homepage()
+    {
+        return view('Company.homepage', [
+            'title' => "index",
+        ]);
+    }
+
     public function login(){
 
         if(Auth::guard('company')->check()){
@@ -69,7 +76,7 @@ class CompanyController extends Controller
         $data['address'] = $req->address;
         $data['email'] = $req->email;
         $data['password'] = Hash::make($req->password);
-        $data['verified'] = 1;
+        $data['verified'] = 0;
         $user = Company::create($data);
 
         if(!$user)

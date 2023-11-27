@@ -13,13 +13,41 @@ return new class extends Migration
     {
         Schema::create('job', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('company_id')
+                  ->constrained('company')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
             $table->string('jobName');
             $table->string('Category');
             $table->string('Salary');
             $table->text('jobDesc');
             $table->text('requirement');
             $table->boolean('avail');
+            $table->boolean('approved');
             $table->timestamps();
+        });
+
+        Schema::create('applied_job', function(Blueprint $table){
+            $table->id();
+
+            $table->foreignId('user_id')
+                  ->constrained('users')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
+            $table->foreignId('company_id')
+                  ->constrained('company')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
+            $table->foreignId('job_id')
+                  ->constrained('job')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            
+            $table->boolean('status');
         });
     }
 
@@ -29,5 +57,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('job');
+        Schema::dropIfExists('applied_job');
     }
 };
