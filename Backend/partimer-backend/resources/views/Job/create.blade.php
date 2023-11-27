@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <form action="{{  route('job.store')  }}" method="POST">
+    <form action="{{  route('job.store', ['company' => $company])  }}" method="POST">
         @csrf
         @method('post')
   @if ($errors->any())

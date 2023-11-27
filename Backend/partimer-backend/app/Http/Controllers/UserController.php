@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function login(){
-
+    public function login()
+    {
         if(Auth::check()){
             return redirect()->intended(route('user_homepage'));
         }
