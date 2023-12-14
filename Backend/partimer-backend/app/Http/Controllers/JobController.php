@@ -66,7 +66,7 @@ class JobController extends Controller
         $data['Salary'] = $req->salary;
         $data['jobDesc'] = $req->jobDesc;
         $data['requirement'] = $req->jobReq;
-        $data['avail'] = 1;
+        $data['status'] = 1;
         $data['approved'] = 0;
         $newJob = Job::create($data);
 

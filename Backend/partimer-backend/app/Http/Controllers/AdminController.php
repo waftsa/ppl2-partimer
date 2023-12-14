@@ -34,5 +34,6 @@ class AdminController extends Controller
         }
         return redirect(route('login'))->with("error", "Login invalid");
     }
+    
 
 }

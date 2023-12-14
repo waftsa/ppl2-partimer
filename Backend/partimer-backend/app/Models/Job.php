@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Job extends Model
 {
@@ -21,11 +22,17 @@ class Job extends Model
         'Salary',
         'jobDesc',
         'requirement',
-        'avail'
+        'status',
+        'approved'
     ];
 
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function status(): HasOne
+    {
+        return $this->hasOne(status::class);
     }
 }
