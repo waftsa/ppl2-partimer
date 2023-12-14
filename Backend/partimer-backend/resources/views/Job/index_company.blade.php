@@ -3,7 +3,8 @@
 @section('content')
     <h1>Job List</h1>
     <div class="container">
-        @foreach($jobs as $job)   
+        @foreach($jobs as $job)
+            @if(Auth::guard('company')->id == $job->company_id)   
         <div class="card-body " style="width: 40rem; height: 10rem"> 
             <div class="card mb-3" >   
                 <img src="company_icon/Kaltsit_first.jpg" width="100" height="100" alt="Kaltsit"/>
@@ -23,7 +24,9 @@
                 </form>
                 </div>   
             </div>
-        @endforeach   
+            @endif  
+        @endforeach
+        <a href="{{ route('job.create',['company' => Auth::guard('company')->user()->id]) }}" class="btn btn-primary mt-3">Create a Job</a>   
         <a href="{{ route('job.index.company') }}" class="btn btn-primary mt-3">Back</a>   
         </div>
     </div>
