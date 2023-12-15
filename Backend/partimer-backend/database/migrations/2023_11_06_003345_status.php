@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("status");
         });
 
-        Schema::create('status_apllied_job', function(Blueprint $table){
+        Schema::create('status_applied_job', function(Blueprint $table){
             $table->id();
             $table->string("status");
         });
@@ -28,7 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('status');
-        Schema::dropIfExists('status_apllied_job');
+        Schema::dropIfExists('status_applied_job');
 
     }
 };

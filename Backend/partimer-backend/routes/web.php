@@ -43,6 +43,7 @@ Route::group(['prefix' => 'user' , 'namespace'=>'User'], function (){
         Route::delete('/profile/{user}/delete',[UserController::class, 'delete'])->name('profile.delete');
 
         Route::get('/job', [JobController::class, 'user_index'])->name('job.index');
+        Route::post('/job', [JobController::class, 'apply'])->name('apply_job');
 
     });
 });
@@ -74,17 +75,15 @@ Route::group(['prefix' => 'company' , 'namespace' => 'Company'], function(){
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
-    Route::get('/', [AdminController::class, 'login'])->name('admin_login');
-    Route::post('/', [AdminController::class, 'login_post'])->name('admin_login.post');
+    Route::get('/login', [AdminController::class, 'login'])->name('admin_login');
+    Route::post('/login', [AdminController::class, 'login_post'])->name('admin_login.post');
+
+    Route::get('/reg', [AdminController::class, 'register'])->name('admin_reg');
+    Route::post('/reg', [AdminController::class, 'register_post'])->name('admin_reg.post');
 
     Route::group(['middleware' => ['auth:admins']], function(){
-        Route::get('/home', function(){
-            return view('Admin.home', [
-                'title' => 'home'
-            ]);
-        })->name('admin.home');
-
-        
+        Route::get('/', [AdminController::class, 'index'])->name('admin.home');
+  
     });
 });
 

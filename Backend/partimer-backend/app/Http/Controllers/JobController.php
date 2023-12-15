@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\User;
+use App\Models\status;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\status_applied_job;
 
 class JobController extends Controller
 {
@@ -106,5 +108,13 @@ class JobController extends Controller
     {
         $job->delete();
         return redirect(route('job.index_company'))->with('success', 'Delete Success'); 
+    }
+
+    public function apply(Job $job, User $user, status_applied_job $stats)
+    {
+        $data['user_id'] = $user->id;
+        $data['company_id'] = $job->company->id;
+        $data['job_id'] = $job->id;
+        $data['status_applied_job'] = $stats->id == 1;
     }
 }
