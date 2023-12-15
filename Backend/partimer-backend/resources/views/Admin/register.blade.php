@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
     @if (!Auth::check())
-    <h1>Login</h1>
-    <form action="{{ route('admin_login.post') }}" method="POST">  
+    <h1>Add Admin</h1>
+    <form action="{{route('admin_reg.post')}}" method="POST">  
         @csrf
     
         @if ($errors->any())
@@ -29,6 +29,6 @@
 </form>
     </div>
     @else
-    
+        <h1>NOTHING </h1>
     @endif
 @endsection

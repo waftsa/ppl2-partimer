@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Company;
+use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -21,19 +24,55 @@ class AdminController extends Controller
 
     public function login_post(Request $req)
     {
-        //Check pass and email (fill or blank)
         $req->validate([
-            'email' => 'required',
+            'name' => 'required',
             'password' => 'required'
         ]);
 
 
-        $credentials = $req->only('email', 'password');
+        $credentials = $req->only('name', 'password');
         if(Auth::guard('admins')->attempt($credentials)){
-            return redirect()->intended(route('admin_home'));
+            return redirect()->intended(route('admin.home'));
         }
-        return redirect(route('login'))->with("error", "Login invalid");
+        return redirect(route('admin_login'))->with("error", "Login invalid");
     }
-    
 
+    public function register(){
+        return view('Admin.register', [
+            'title' => 'Register'
+        ]);
+    }
+
+    public function register_post(Request $req)
+    {
+        $req->validate([
+            'name' => 'required',
+            'password' => 'required',
+        ]);
+
+        $data['name'] = $req->name;
+        $data['password'] = Hash::make($req->password);
+        $user = Admin::create($data);
+
+        if(!$user)
+        {
+            return redirect(route('landing_page'))->with("error", "Failed");
+        }
+        return redirect(route('admin_login'))->with("success", "Success");
+
+    }
+
+    public function index()
+    {
+        $jobs = Job::all();
+        $company = Company::all();
+
+        return view('Admin.home', [
+            'title' => 'admins',
+            'jobs' => $jobs,
+            'company' => $company,
+        ]);
+    }
+
+    
 }

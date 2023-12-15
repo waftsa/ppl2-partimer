@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\status_applied_job;
+use App\Models\status;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        status_applied_job::create([
+            'status' => "waiting",
+        ]);
+        
+        
+        
     }
 }
