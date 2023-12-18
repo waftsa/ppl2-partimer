@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Apllied_Job extends Model
+class Applied_Job extends Model
 {
     use HasFactory;
 
@@ -15,8 +17,19 @@ class Apllied_Job extends Model
     protected $fillable = [
         'id',
         'user_id',
-        'company_id',
         'job_id',
-        'status_apllied_job',
+        'status',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function jobs(): BelongsTo
+    {
+        return $this->belongsTo(Job::class, 'job_id');
+    }
 }
+
+

@@ -4,7 +4,7 @@
     <h1>Job List</h1>
     <div class="container">
         @foreach($jobs as $job)
-            @if(Auth::guard('company')->id == $job->company_id)   
+            @if(Auth::guard('company')->user()->id == $job->company->id)   
         <div class="card-body " style="width: 40rem; height: 10rem"> 
             <div class="card mb-3" >   
                 <img src="company_icon/Kaltsit_first.jpg" width="100" height="100" alt="Kaltsit"/>
@@ -16,7 +16,8 @@
                 <p class="card-text">{{ $job->requirement }}</p>
 
                 <div>
-                <a href="{{ route('job.edit', ['job' => $job]) }}" class="btn btn-primary" style="width: 10rem">Edit</a>    
+                <a href="{{ route('job.edit', ['job' => $job]) }}" class="btn btn-primary" style="width: 10rem">Edit</a>  
+                <a href="{{ route('applicant', ['job' => $job]) }}" class="btn btn-primary" style="width: 10rem">View Applicant</a>    
                 <form method="POST" action= "{{ route('job.delete', ['job' => $job]) }}">
                     @csrf
                     @method('delete')           

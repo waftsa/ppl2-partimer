@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Job extends Model
 {
@@ -32,13 +30,9 @@ class Job extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function status(): HasOne
+    public function job_apply()
     {
-        return $this->hasOne(status::class);
+        return $this->hasOne(Applied_Job::class);
     }
 
-    public function user_apply(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
 }

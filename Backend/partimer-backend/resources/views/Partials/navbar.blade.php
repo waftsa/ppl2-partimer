@@ -10,7 +10,7 @@
                 <a class="nav-link {{ ($title === "Landing Page") ? 'active' : ' ' }}" href="/">Landing Page</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ ($title === "Home") ? 'active' : ' ' }}" href="/">Home</a>
+                <a class="nav-link {{ ($title === "Home") ? 'active' : ' ' }}" href="{{ route('user_homepage') }}">Home</a>
             </li>
             @auth
             <li class="nav-item">
@@ -47,7 +47,7 @@
         </ul>
         <span class="navbar-text">
             @auth
-            <a class="nav-link" href="/profile">{{ auth()->user()->name }} </a> 
+            <a class="nav-link" href="{{ route('profile',['user' => auth()->user()->id]) }} "> {{ auth()->user()->name   }} </a> 
             @endauth
         </span>
         </div>

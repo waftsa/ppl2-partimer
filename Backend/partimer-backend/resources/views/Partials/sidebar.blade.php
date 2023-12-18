@@ -56,7 +56,7 @@ div.content {
 </style>
 
 <div class="sidebar">
-  <a class="active" href="/">Home</a>
+  <a class="active" href="{{ route('user_homepage') }}">Home</a>
   @auth
   <a href="{{ route('job.index') }}">Job</a>
   <a href="{{ route('profile',auth()->id()) }}">Profile</a>

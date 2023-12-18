@@ -13,7 +13,8 @@ class AdminController extends Controller
 {
     public function login()
     {
-        if(!Auth::guard('admins')){
+        //dd(Auth::check());
+        if(Auth::check()){
             return redirect()->intended(route('landing_page'));
         }
 
@@ -24,16 +25,16 @@ class AdminController extends Controller
 
     public function login_post(Request $req)
     {
+        
         $req->validate([
             'name' => 'required',
             'password' => 'required'
         ]);
-
-
         $credentials = $req->only('name', 'password');
         if(Auth::guard('admins')->attempt($credentials)){
-            return redirect()->intended(route('admin.home'));
+            return redirect()->intended(route('admin.home'));       
         }
+        dd(Auth::check());
         return redirect(route('admin_login'))->with("error", "Login invalid");
     }
 

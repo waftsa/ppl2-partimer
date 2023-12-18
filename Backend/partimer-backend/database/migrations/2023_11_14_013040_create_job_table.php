@@ -25,10 +25,7 @@ return new class extends Migration
             $table->text('jobDesc');
             $table->text('requirement');
 
-            $table->foreignId('status')
-                  ->constrained('status')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            $table->string('status');
 
             $table->boolean('approved');
             $table->timestamps();
@@ -42,20 +39,13 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
-            $table->foreignId('company_id')
-                  ->constrained('company')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
-
             $table->foreignId('job_id')
                   ->constrained('job')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             
-            $table->foreignId('status_apllied_job')
-                  ->constrained('status')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            $table->string('status');
+            $table->timestamps();
         });
     }
 

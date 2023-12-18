@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Job;
+use App\Models\Applied_Job;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
-
 
 class UserController extends Controller
 {
@@ -33,6 +35,7 @@ class UserController extends Controller
 
         $credentials = $req->only('email', 'password');
         if(Auth::guard('web')->attempt($credentials)){
+            dd(Auth::check());
             return redirect()->intended(route('user_homepage'));
         }
         return redirect(route('login'))->with("error", "Login invalid");
@@ -83,9 +86,10 @@ class UserController extends Controller
         return redirect(route('login'))->with("success", "Registration Successfull");
     }
 
-    function profile(){
+    function profile(User $user){
         return view('User.profile',[
-            'title' => 'Profile'
+            'title' => 'Profile',
+            'user' => $user,
         ]);
     }
 
@@ -148,6 +152,31 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect(route('login'))->with('success', 'Delete Success'); 
+    }
+
+    public function home(Applied_Job $apply)
+    {
+        $accepted = Applied_Job::where('user_id', auth()->user()->id)
+        ->where('status', 'Accepted')->get();
+        //dd($accepted);
+
+        $apply = Applied_Job::all();
+        //dd($apply);
+        return view('User.home', [
+            'title' => 'Home',
+            'applicant' => $apply,
+            'accept' => $accepted
+        ]);
+    }
+
+    public function apply(Job $job)
+    {
+        $data['user_id'] = auth()->user()->id;
+        $data['job_id'] = $job->id;
+        $data['status'] = "Waiting";
+
+        Applied_Job::create($data);
+        return redirect(route('user_homepage'))->with('success', 'Job Apllied, Waiting For Company Respons');
     }
 
 }
