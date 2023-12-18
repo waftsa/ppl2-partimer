@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +32,7 @@ Route::group(['prefix' => 'user' , 'namespace'=>'User'], function (){
     Route::post('/register', [UserController::class, 'register_post'])->name('register.post');
 
     Route::group(['middleware' => ['auth:web']], function(){
-        Route::get('/home', function(){
-            return view('User.home', [
-                'title' => 'Home',
-            ]);
-        })->name('user_homepage');
+        Route::get('/home', [UserController::class, 'home'])->name('user_homepage');
 
         Route::get('/profile/{user}', [UserController::class, 'profile'])->name('profile');
         Route::get('/profile/{user}/edit',[UserController::class, 'edit'])->name('profile.edit');
@@ -43,7 +40,7 @@ Route::group(['prefix' => 'user' , 'namespace'=>'User'], function (){
         Route::delete('/profile/{user}/delete',[UserController::class, 'delete'])->name('profile.delete');
 
         Route::get('/job', [JobController::class, 'user_index'])->name('job.index');
-        Route::post('/job', [JobController::class, 'apply'])->name('apply_job');
+        Route::post('/job/{job}/apply', [UserController::class, 'apply'])->name('apply_job');
 
     });
 });
@@ -62,7 +59,6 @@ Route::group(['prefix' => 'company' , 'namespace' => 'Company'], function(){
 
     Route::group(['middleware' => ['auth:company']], function() {
         Route::get('/index', [CompanyController::class , 'homepage'])->name('company_homepage');
-        
         Route::get('/index_job', [CompanyController::class, 'index'])->name('job.index.company');
 
         Route::get('/job', [JobController::class, 'company_index'])->name('company_job.index');
@@ -71,6 +67,10 @@ Route::group(['prefix' => 'company' , 'namespace' => 'Company'], function(){
         Route::get('/job/{job}/edit',[JobController::class, 'edit'])->name('job.edit');
         Route::put('/job/{job}/update',[JobController::class, 'update'])->name('job.update');
         Route::delete('/job/{job}/delete',[JobController::class, 'delete'])->name('job.delete');
+
+        Route::get('/job/{job}/applicant', [JobController::class, 'applicant'])->name('applicant');
+
+        Route::put('/applicant/{apply}/accept', [CompanyController::class, 'accepted'])->name('accepted');
     });
 });
 
@@ -83,7 +83,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
 
     Route::group(['middleware' => ['auth:admins']], function(){
         Route::get('/', [AdminController::class, 'index'])->name('admin.home');
-  
+
+        Route::put('/index/{job}/allow', [JobController::class, 'allow'])->name('admin.allow');
+        Route::put('/index/{company}/verif', [CompanyController::class, 'verified'])->name('admin.verif');
+        
     });
 });
+
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login_google');
+Route::get('google/callback', [GoogleController::class, 'handleGoogleCallback']);
 

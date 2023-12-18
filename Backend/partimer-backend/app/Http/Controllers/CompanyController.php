@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applied_Job;
 use App\Models\Job;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class CompanyController extends Controller
 
     public function login(){
 
-        if(Auth::guard('company')->check()){
+        if(Auth::check()){
             return redirect()->intended(route('company_homepage'));
         }
 
@@ -37,9 +38,17 @@ class CompanyController extends Controller
             'password' => 'required'
         ]);
 
+        
         $credentials = $req->only('email', 'password');
         if(Auth::guard('company')->attempt($credentials)){ 
-            return redirect()->intended(route('company_homepage'))->with('success','You are Logged in sucessfully.');
+            //dd(Auth::check());
+            if(Auth::guard('company')->user()->verified){
+                return redirect()->intended(route('company_homepage'))->with('success','You are Logged in sucessfully.');
+            }
+            else{
+            Auth::logout();
+            return back()->with('error','Email not verified');
+            }
         }
         return back()->with('error','Whoops! invalid email and password.');
     }
@@ -99,5 +108,21 @@ class CompanyController extends Controller
             'jobs' => $jobs,
             compact('jobs')
         ]);
+    }
+
+    public function verified(Company $company)
+    {
+        $data['verified'] = 1;
+        $company->update($data);
+
+        return redirect()->back();
+    }
+
+    public function accepted(Applied_Job $apply)
+    {
+        $data['status'] = 'Accepted';
+        $apply->update($data);
+
+        return redirect()->back();
     }
 }

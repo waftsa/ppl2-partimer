@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -23,6 +24,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'id',
+        'google_id',
         'name',
         'phoneNum',
         'email',
@@ -55,8 +57,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function job_apply(): BelongsTo
+    public function user_apply()
     {
-        return $this->belongsTo(Job::class);
+        return $this->hasOne(Applied_Job::class);
     }
 }

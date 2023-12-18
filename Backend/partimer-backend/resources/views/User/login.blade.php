@@ -33,6 +33,10 @@
     <a class="nav-link" href="{{ route('company_login') }}">Company</a>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+
+    <div>
+    <a href="{{ route('login_google') }}" class="btn btn-primary mt-5" style="width: 10rem">Login With Google</a>    
+    </div>
 </form>
     </div>
     @else

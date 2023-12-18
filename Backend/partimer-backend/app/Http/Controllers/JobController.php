@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use App\Models\User;
-use App\Models\status;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\status_applied_job;
+use App\Models\Applied_Job;
 
 class JobController extends Controller
 {
@@ -68,18 +66,19 @@ class JobController extends Controller
         $data['Salary'] = $req->salary;
         $data['jobDesc'] = $req->jobDesc;
         $data['requirement'] = $req->jobReq;
-        $data['status'] = 1;
+        $data['status'] = $req->status;
         $data['approved'] = 0;
-        $newJob = Job::create($data);
+        Job::create($data);
 
         return redirect(route('company_homepage'));
     }
 
-    public function edit(Job $job)
+    public function edit(Job $job, Applied_Job $apply)
     {
         return view('job.edit',[
             'title' => 'edit',
-            'job' => $job
+            'job' => $job,
+            'applicant' => $apply
         ]);
     }
 
@@ -98,7 +97,7 @@ class JobController extends Controller
         $data['Salary'] = $req->salary;
         $data['jobDesc'] = $req->jobDesc;
         $data['requirement'] = $req->jobReq;
-        $data['avail'] = 1;
+        $data['approved'] = 0;
 
         $job->update($data);
         return redirect(route('job.index'))->with('success', 'Update Success');
@@ -110,11 +109,22 @@ class JobController extends Controller
         return redirect(route('job.index_company'))->with('success', 'Delete Success'); 
     }
 
-    public function apply(Job $job, User $user, status_applied_job $stats)
+    public function allow(Job $job)
     {
-        $data['user_id'] = $user->id;
-        $data['company_id'] = $job->company->id;
-        $data['job_id'] = $job->id;
-        $data['status_applied_job'] = $stats->id == 1;
+        $data['approved'] = 1;
+        $job->update($data);
+
+        return redirect()->back();
+    }
+
+    public function applicant(Job $job, Applied_Job $apply)
+    {
+        $apply = Applied_Job::all();
+
+        return view('Company.job_applicant', [
+            'title' => 'Applicant',
+            'job' => $job,
+            'applicant' => $apply,
+        ]);
     }
 }
