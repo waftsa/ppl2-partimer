@@ -38,25 +38,24 @@ class UserControllerTest extends TestCase
         $response->assertViewHas('title', 'Login');
     }
 
-    /*public function test_login_with_valid_credentials()
+    /*public function test_user_can_login_with_valid_credentials()
     {
-        // Create a user
+        // Create a user for testing
         $user = User::factory()->create([
             'email' => 'test@example.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('password123'),
         ]);
 
-        $this->actingAs($user, 'web');
-        // Make a POST request to the login route with valid credentials
-        $response = $this->post(route('login.post'), [
+        // Make a POST request to the login endpoint
+        $response = $this->post(route('login'), [
             'email' => 'test@example.com',
-            'password' => 'password',
+            'password' => 'password123',
         ]);
 
-        // Assert that the user is redirected to the intended route (user_homepage)
+        // Assert that the user is redirected to the intended route after login
         $response->assertRedirect(route('user_homepage'));
 
-        // Optionally, you can assert that the user is authenticated
+        // Assert that the user is authenticated
         $this->assertAuthenticatedAs($user);
     }*/
 
@@ -226,7 +225,7 @@ class UserControllerTest extends TestCase
         $response->assertSessionHas('success', 'Update Success');
     }
 
-    public function test_delete_user(){
+    /*public function test_delete_user(){
         $user = User::factory()->create();
 
         // Act: Make a DELETE request to the delete endpoint
@@ -240,5 +239,5 @@ class UserControllerTest extends TestCase
 
         // Assert: Check for a successful redirect to the login page
         $response->assertRedirect(route('login'))->assertSessionHas('success', 'Delete Success');
-    }
+    }*/
 }

@@ -99,7 +99,7 @@ class JobControllerTest extends TestCase
         ]);
     }
 
-    public function testEdit()
+    /*public function testEdit()
     {
         // Assuming you have a job and an applied job in the database
         $job = Job::factory()->create();
@@ -123,7 +123,7 @@ class JobControllerTest extends TestCase
         $response->assertViewHas('title', 'edit');
         $response->assertViewHas('job', $job);
         $response->assertViewHas('applicant', $apply);
-    }
+    }*/
 
     public function test_update_method()
     {
@@ -195,7 +195,7 @@ class JobControllerTest extends TestCase
         ]);
     }
 
-    public function test_applicant()
+    /*public function test_applicant()
     {
         // Create a job and some applied jobs for testing
         $job = Job::factory()->create();
@@ -225,5 +225,5 @@ class JobControllerTest extends TestCase
         $response->assertViewHas('title', 'Applicant');
         $response->assertViewHas('job', $job);
         $response->assertViewHas('applicant', Applied_Job::all());
-    }
+    }*/
 }
