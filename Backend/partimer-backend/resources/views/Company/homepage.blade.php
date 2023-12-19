@@ -11,7 +11,7 @@
         <div class="card-body">
     <h5 class="card-title">Profil Perusahaan</h5>
     <p class="card-text">Edit Profile</p>
-    <a href="#" class="btn btn-primary">Select</a>
+    <a href="{{ route('profile_company',['user' => auth()->user()->id]) }} " class="btn btn-primary" > Select </a> 
   </div>
     </div>
     <div class="card mb-3" style="width: 80rem;">

@@ -42,8 +42,13 @@ tr:nth-child(even) {
         <form action="{{ route('accepted', ['apply' => $applicants]) }}" method="POST">
             @csrf
             @method('put')
-                <button type="submit" class="btn btn-primary mt-3" style="height: 2.3rem; background-color: blue">Accept</button>
-            </form>
+                <button type="submit" class="btn btn-primary mt-2" style="height: 2.3rem; background-color: blue">Accept</button>
+        </form>
+        <form action="{{ route('declined', ['apply' => $applicants]) }}" method="POST">
+            @csrf
+            @method('put')
+                <button type="submit" class="btn btn-primary mt-2" style="height: 2.3rem; background-color: red">Declined</button>
+        </form>
         @else
             {{ $applicants->status}}
         @endif
@@ -52,4 +57,6 @@ tr:nth-child(even) {
         @endif
     @endforeach    
 </table>
+    <a href="{{ route('company_homepage') }}" class="btn btn-primary mt-4">Back</a>
+
 @endsection
