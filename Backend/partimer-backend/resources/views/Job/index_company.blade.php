@@ -28,7 +28,7 @@
             @endif  
         @endforeach
         <a href="{{ route('job.create',['company' => Auth::guard('company')->user()->id]) }}" class="btn btn-primary mt-3">Create a Job</a>   
-        <a href="{{ route('job.index.company') }}" class="btn btn-primary mt-3">Back</a>   
+        <a href="{{ route('company_homepage') }}" class="btn btn-primary mt-3">Back</a>   
         </div>
     </div>
 @endsection

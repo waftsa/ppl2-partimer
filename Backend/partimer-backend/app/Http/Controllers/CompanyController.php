@@ -96,6 +96,49 @@ class CompanyController extends Controller
         return redirect(route('company_login'))->with("success", "Registration Successfull, Waiting For Approval");
     }
 
+    function profile(Company $company){
+        return view('Company.profile',[
+            'title' => 'Profile',
+            'user' => $company,
+        ]);
+    }
+
+    public function edit(Company $company)
+    {
+        return view('Company.edit',[
+            'title' => 'edit',
+            'user' => $company,
+        ]);
+    }
+
+    public function update(Company $user,Request $req)
+    {
+        
+        $req->validate([
+            'phoneNum' => 'required|min:10',
+            'email' => 'required|email',
+            'description' => 'required',
+            'address' => 'required',
+            'updated_at' => now()
+        ]);
+         
+        $data['phoneNum'] = $req->phoneNum;
+        $data['email'] = $req->email;
+        $data['description'] = $req->description;
+        $data['address'] = $req->address;
+
+        if($req->hasFile('profile_picture')){
+            $file = $req->file('profile_picture');
+            $fileName = $user->email.'_'.$file->getClientOriginalName();
+            $req->file('profile_picture')->storeAs('image_user', $fileName, 'public');
+
+            $data['icon_url'] = $fileName;
+        }
+
+        $user->update($data);
+        return redirect(route('profile_company', auth()->id()))->with('success', 'Update Success');
+    }
+
     public function index()
     {
         if(!Auth::guard('company')){
@@ -121,6 +164,14 @@ class CompanyController extends Controller
     public function accepted(Applied_Job $apply)
     {
         $data['status'] = 'Accepted';
+        $apply->update($data);
+
+        return redirect()->back();
+    }
+
+    public function declined(Applied_Job $apply)
+    {
+        $data['status'] = 'Declined';
         $apply->update($data);
 
         return redirect()->back();

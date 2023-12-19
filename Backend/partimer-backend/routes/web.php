@@ -61,6 +61,11 @@ Route::group(['prefix' => 'company' , 'namespace' => 'Company'], function(){
         Route::get('/index', [CompanyController::class , 'homepage'])->name('company_homepage');
         Route::get('/index_job', [CompanyController::class, 'index'])->name('job.index.company');
 
+        Route::get('/profile/{user}', [CompanyController::class, 'profile'])->name('profile_company');
+        Route::get('/profile/{user}/edit',[CompanyController::class, 'edit'])->name('company_profile.edit');
+        Route::put('/profile/{user}/update',[CompanyController::class, 'update'])->name('company_profile.update');
+
+
         Route::get('/job', [JobController::class, 'company_index'])->name('company_job.index');
         Route::get('/job/{company}/create', [JobController::class, 'create'])->name('job.create');
         Route::post('/job/{company}', [JobController::class, 'store'])->name('job.store');
@@ -71,6 +76,8 @@ Route::group(['prefix' => 'company' , 'namespace' => 'Company'], function(){
         Route::get('/job/{job}/applicant', [JobController::class, 'applicant'])->name('applicant');
 
         Route::put('/applicant/{apply}/accept', [CompanyController::class, 'accepted'])->name('accepted');
+        Route::put('/applicant/{apply}/decline', [CompanyController::class, 'declined'])->name('declined');
+
     });
 });
 
